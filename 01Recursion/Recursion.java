@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 public class Recursion{ 
 
     public static String name(){
@@ -8,7 +10,10 @@ public class Recursion{
 	if (n < 0) {
 	    throw new IllegalArgumentException(); 
 	}
-	return helper(n,1);
+	if (n == 0) {
+	    return 0;
+	}
+	return helper(n,1.);
 	     
     }
 
@@ -17,18 +22,22 @@ public class Recursion{
 	    return guess;
 	}
 	guess = ((value / guess + guess) / 2);
-	helper(value,guess);
+	return helper(value,guess);
     }
 
     public static boolean isCloseEnough(double yourAnswer, double actual) {
-	return (((yourAnswer - actual) / actual) < 0.000000000001);
+	return (((Math.abs(actual - yourAnswer)) / Math.max(actual,yourAnswer)) <= 0.00000000000001);
     }
 
     public static void main(String[] args) {
-	System.out.println(sqrt(100));
+	System.out.println(sqrt(100.));
+	//System.out.println(helper(100.,1.));
 	System.out.println(sqrt(0));
-	System.out.println(sqrt(-1));
+	//System.out.println(sqrt(-1));
 	System.out.println(sqrt(35));
+	System.out.println(sqrt(35.));
+	System.out.println(sqrt(37.));
 	System.out.println(sqrt(37));
+	
     }
 }
