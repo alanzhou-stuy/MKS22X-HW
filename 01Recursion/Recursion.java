@@ -35,8 +35,8 @@ public class Recursion{
 	System.out.println(sqrt(0));
 	//System.out.println(sqrt(-1));
 	System.out.println(sqrt(35));
-	System.out.println(sqrt(35.));
-	System.out.println(sqrt(37.));
+	System.out.println(sqrt(35.55));
+	System.out.println(sqrt(37.55));
 	System.out.println(sqrt(37));
 	
     }
