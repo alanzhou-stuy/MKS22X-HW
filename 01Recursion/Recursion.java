@@ -30,14 +30,15 @@ public class Recursion{
     }
 
     public static void main(String[] args) {
-	System.out.println(sqrt(100.));
+	System.out.println(sqrt(100));
 	//System.out.println(helper(100.,1.));
 	System.out.println(sqrt(0));
 	//System.out.println(sqrt(-1));
 	System.out.println(sqrt(35));
 	System.out.println(sqrt(35.55));
 	System.out.println(sqrt(37.55));
-	System.out.println(sqrt(37));
+	System.out.println(sqrt(900));
+	System.out.println(sqrt(9.5) * sqrt(9.5));
 	
     }
 }
