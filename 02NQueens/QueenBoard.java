@@ -14,14 +14,9 @@ public class QueenBoard{
 	if (col == board.length) {
 	    return true;
 	}
-	for (int i = 0; i < board.length; i++) {
-	    if (i == 0) {
-		placeQueen();
-		solveH(col + 1, row);
-	    }
-	    if (i != 0) {
-		removeQueen();
-		solveH(col,row + 1);
+	for (int i = col i < board.length; i++) {
+	    for (int j = row; j < board.length; j++) {
+
 	    }
 	}
     }
