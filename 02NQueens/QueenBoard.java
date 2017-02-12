@@ -6,8 +6,8 @@ public class QueenBoard{
 	board = new int[size][size];
     }
 
-    public void solve() {
-	solveH(0);
+    public boolean solve() {
+	return solveH(0);
     }
 
     private boolean solveH(int col){
@@ -60,8 +60,18 @@ public class QueenBoard{
     }
     */
     public String toString(){
-    	return "";
+    	String ans = "";
+	for (int i = 0; i < board.length; i++) {
+	    for (int j = 0; j <board.length; j++) {
+		ans += " " + board[i][j];
+	    }
+	}
+	return ans;
     }
 
-
+    public static void main(String[] args) {
+	QueenBoard board = new QueenBoard(4);
+	//	board.solve();
+    }
+    
 }
