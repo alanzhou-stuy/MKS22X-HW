@@ -4,6 +4,11 @@ public class QueenBoard{
 
     public QueenBoard(int size){
 	board = new int[size][size];
+	for (int i = 0; i < board.length; i++) {
+	    for (int j = 0; j <board.length; j++) {
+		board[i][j] = 0;
+	    }
+	}
     }
 
     public boolean solve() {
@@ -16,10 +21,11 @@ public class QueenBoard{
 	}
 	for (int i = 0; i < board.length; i++) {
 	    if (board[col][i] == 0) {
+		board[col][i] = -1;
 		placeQueen(col,i);
 		return solveH(col + 1);
 	    }
-	    if((i != 0) && (board[col][i] != 0)) {
+	    if((col != 0) && (board[col][i] != 0)) {
 		removeQueen(col,i);
 		return solveH(col - 1);
 	    }
@@ -37,16 +43,40 @@ public class QueenBoard{
 
     private void setRestrictions(int num,int col,int row) {
 	if (num == 0) {
-	    for (int i = 0; i == board.length; i++) {
+	    for (int i = 0; i <  board.length; i++) {
 		if (i != row) {
 		    board[col][i] ++;
 		}
 	    }
-	    for(int i = 0; i == board.length; i++) {
+	    for(int i = 0; i < board.length; i++) {
 		if (i != col) {
 		    board[i][row] ++;
 		}
 	    }
+	    /* for (int i = 0; i < board.length; i++) {
+	        for (int j = 0; j < board.length; j++) {
+		    if ( (col - i) || (col + i) && (row + i) || (row - i))
+		}
+	    }
+	    */
+	}
+	if (num == 1) {
+	    for (int i = 0; i <  board.length; i++) {
+		if (i != row) {
+		    board[col][i] --;
+		}
+	    }
+	    for(int i = 0; i < board.length; i++) {
+		if (i != col) {
+		    board[i][row] --;
+		}
+	    }
+	    /* for (int i = 0; i < board.length; i++) {
+	        for (int j = 0; j < board.length; j++) {
+		    if ( (col - i) || (col + i) && (row + i) || (row - i))
+		}
+	    }
+	    */
 	}
     }
 
@@ -63,7 +93,15 @@ public class QueenBoard{
     	String ans = "";
 	for (int i = 0; i < board.length; i++) {
 	    for (int j = 0; j <board.length; j++) {
-		ans += " " + board[i][j];
+	        if (board[i][j] == -1) {
+		    ans += "Q ";
+		}
+		else {
+		    ans += "_ ";
+		}
+		if (j == board.length - 1) {
+		    ans += "\n";
+		}
 	    }
 	}
 	return ans;
@@ -71,7 +109,8 @@ public class QueenBoard{
 
     public static void main(String[] args) {
 	QueenBoard board = new QueenBoard(4);
-	//	board.solve();
+	System.out.println(board.solve());
+	System.out.println(board.toString());
     }
     
 }
