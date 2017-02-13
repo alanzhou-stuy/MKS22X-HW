@@ -23,11 +23,15 @@ public class QueenBoard{
 	    if (board[col][i] == 0) {
 		board[col][i] = -1;
 		placeQueen(col,i);
-		return solveH(col + 1);
+		if (solveH(col + 1)) {
+		    return true;
+		}
 	    }
 	    if((col != 0) && (board[col][i] != 0)) {
 		removeQueen(col,i);
-		return solveH(col - 1);
+		if (solveH(col - 1)) {
+		    return false;
+		}
 	    }
 	}
 	return false;
@@ -45,20 +49,18 @@ public class QueenBoard{
 	if (num == 0) {
 	    for (int i = 0; i <  board.length; i++) {
 		if (i != row) {
-		    board[col][i] ++;
+		    board[col][i] += 1;
 		}
 	    }
 	    for(int i = 0; i < board.length; i++) {
 		if (i != col) {
-		    board[i][row] ++;
+		    board[i][row] += 1; 
+		}
+		if ((i != col) && (i - col + row >= 0) && ((-1 * i) + col + row >= 0) && (i - col + row < board.length) && ((-1 * i) + col + row < board.length)) {
+		    board[i][i - col + row] += 1;
+		    board[i][(-1 * i) + col + row] += 1;
 		}
 	    }
-	    /* for (int i = 0; i < board.length; i++) {
-	        for (int j = 0; j < board.length; j++) {
-		    if ( (col - i) || (col + i) && (row + i) || (row - i))
-		}
-	    }
-	    */
 	}
 	if (num == 1) {
 	    for (int i = 0; i <  board.length; i++) {
@@ -70,22 +72,20 @@ public class QueenBoard{
 		if (i != col) {
 		    board[i][row] --;
 		}
-	    }
-	    /* for (int i = 0; i < board.length; i++) {
-	        for (int j = 0; j < board.length; j++) {
-		    if ( (col - i) || (col + i) && (row + i) || (row - i))
+		if ((i != col) && (i - col + row >= 0) && ((-1 * i) + col + row >= 0) && (i - col + row < board.length) && (-1 * i) + col + row < board.length)  {
+		    board[i][i - col + row] += 1;
+		    board[i][(-1 * i) + col + row] += 1;
 		}
 	    }
-	    */
 	}
     }
 
     
     /*
-    public void countSolutions(){
+    public int getSolutionCount(){
     }
     
-    public int getCount() {
+    public void countSolutions() {
 	
     }
     */
@@ -109,8 +109,13 @@ public class QueenBoard{
 
     public static void main(String[] args) {
 	QueenBoard board = new QueenBoard(4);
+	
 	System.out.println(board.solve());
-	System.out.println(board.toString());
+	System.out.println(board);
+	/*
+	System.out.println(board.countSolutions());
+	System.out.println(board.getSolutionCount());
+	*/
     }
     
 }
