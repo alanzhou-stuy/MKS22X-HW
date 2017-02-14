@@ -26,12 +26,8 @@ public class QueenBoard{
 		if (solveH(col + 1)) {
 		    return true;
 		}
-	    }
-	    if((col != 0) && (board[col][i] != 0)) {
+		board[col][i] = 1;
 		removeQueen(col,i);
-		if (solveH(col - 1)) {
-		    return false;
-		}
 	    }
 	}
 	return false;
@@ -47,34 +43,28 @@ public class QueenBoard{
 
     private void setRestrictions(int num,int col,int row) {
 	if (num == 0) {
-	    for (int i = 0; i <  board.length; i++) {
-		if (i != row) {
-		    board[col][i] += 1;
-		}
-	    }
 	    for(int i = 0; i < board.length; i++) {
 		if (i != col) {
 		    board[i][row] += 1; 
 		}
-		if ((i != col) && (i - col + row >= 0) && ((-1 * i) + col + row >= 0) && (i - col + row < board.length) && ((-1 * i) + col + row < board.length)) {
+		if ((i != col) && (i - col + row >= 0) && (i - col + row < board.length)) {
 		    board[i][i - col + row] += 1;
+		}
+		if ((i != col) && ((-1 * i) + col + row >= 0) && ((-1 * i) + col + row < board.length)) {
 		    board[i][(-1 * i) + col + row] += 1;
 		}
 	    }
 	}
 	if (num == 1) {
-	    for (int i = 0; i <  board.length; i++) {
-		if (i != row) {
-		    board[col][i] --;
-		}
-	    }
 	    for(int i = 0; i < board.length; i++) {
 		if (i != col) {
-		    board[i][row] --;
+		    board[i][row] -= 1;
 		}
-		if ((i != col) && (i - col + row >= 0) && ((-1 * i) + col + row >= 0) && (i - col + row < board.length) && (-1 * i) + col + row < board.length)  {
-		    board[i][i - col + row] += 1;
-		    board[i][(-1 * i) + col + row] += 1;
+		if ((i != col) && (i - col + row >= 0) && (i - col + row < board.length)) {
+		    board[i][i - col + row] -= 1;
+		}
+		if ((i != col) &&  ((-1 * i) + col + row >= 0) && ((-1 * i) + col + row < board.length)) {
+		    board[i][(-1 * i) + col + row] -= 1;
 		}
 	    }
 	}
