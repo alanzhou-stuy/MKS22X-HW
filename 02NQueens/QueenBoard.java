@@ -9,6 +9,7 @@ public class QueenBoard{
 		board[i][j] = 0;
 	    }
 	}
+	solutionCount = -1;
     }
 
     public boolean solve() {
@@ -71,14 +72,15 @@ public class QueenBoard{
     }
 
     
-    /*
-    public int getSolutionCount(){
-    }
     
+    public int getSolutionCount(){
+	return solutionCount;
+    }
+
     public void countSolutions() {
 	
     }
-    */
+    
     public String toString(){
     	String ans = "";
 	for (int i = 0; i < board.length; i++) {
