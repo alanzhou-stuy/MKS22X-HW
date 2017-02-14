@@ -12,8 +12,8 @@ public class QueenBoard{
 	solutionCount = -1;
     }
 
-    public boolean solve() {
-	return solveH(0,false);
+    public void solve() {
+	solveH(0,false);
     }
 
     private boolean solveH(int col,boolean counting){
@@ -116,7 +116,7 @@ public class QueenBoard{
     public static void main(String[] args) {
 	QueenBoard board = new QueenBoard(10);
 	
-	System.out.println(board.solve());
+        board.solve();
 	System.out.println(board);
 	board.countSolutions();
 	System.out.println(board.getSolutionCount());
