@@ -1,16 +1,9 @@
 public class KnightBoard {
-    private int[][]board,secBoard;
+    private int[][]board;
     private int num = 0;
 
     public KnightBoard(int startingRows,int startingCols) {
 	board = new int[startingRows][startingCols];
-	/*	for (int i = 0; i < board.length; i++ ){
-	    for (int j = 0; j < board[0].length;j++) {
-		if (i == 0) {
-		    
-		}
-	    }
-	    }*/
     }
 	
     public String toString() {
@@ -51,11 +44,11 @@ public class KnightBoard {
 	    board[row][col] = num;
 	    if (solveH(row - 1, col - 2) ||
 		solveH(row - 2, col - 1) || 
+		solveH(row + 1, col + 2) || 
 		solveH(row - 2, col + 1) || 
 		solveH(row + 2, col - 1) ||
 		solveH(row + 1, col + 2) ||
 		solveH(row + 2, col + 1) || 
-		solveH(row + 1, col + 2) || 
 		solveH(row - 1, col + 2)  ){
 		return true;
 	    }
@@ -74,19 +67,10 @@ public class KnightBoard {
 	    return false;
 	}
     }
-    /*
-    public boolean betterSolveH(int row, int col) {
-
-    }
-
-    public boolean betterSolve() {
-
-    }
-    */
-						  
+					  
 
     public static void main(String[] args) {
-        KnightBoard board = new KnightBoard(5,5);
+        KnightBoard board = new KnightBoard(8,8);
 	System.out.println(board.solve());
 	System.out.println(board);
     }
