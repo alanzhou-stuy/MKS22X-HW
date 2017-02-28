@@ -47,15 +47,10 @@ public class Maze{
     public void clearTerminal(){
         System.out.println("\033[2J\033[1;1H");
     }
-    /*Wrapper Solve Function
-      Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
-    */
+
     public boolean solve(){
             int startr=-1,startc=-1;
-
-            //Initialize starting row and startint col with the location of the S. 
-
-            maze[startr][startc] = ' ';//erase the S, and start solving!
+            maze[startr][startc] = ' ';
             return solve(startr,startc);
     }
 
@@ -78,11 +73,10 @@ public class Maze{
     private boolean solve(int row, int col){
         if(animate){
             System.out.println("\033[2J\033[1;1H"+this);
-
             wait(20);
         }
 
-        //COMPLETE SOLVE
+
 
         return false; //so it compiles
     }
