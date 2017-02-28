@@ -42,14 +42,15 @@ public class KnightBoard {
 	else {
 	    num += 1;
 	    board[row][col] = num;
-	    if (solveH(row - 1, col - 2) ||
+	    if (solveH(row - 1, col + 2) ||
+		solveH(row - 1, col - 2) ||
 		solveH(row - 2, col - 1) || 
 		solveH(row - 2, col + 1) || 
 		solveH(row + 2, col - 1) ||
 		solveH(row + 1, col + 2) ||
 		solveH(row + 2, col + 1) ||
-		solveH(row + 1, col + 2) ||  
-		solveH(row - 1, col + 2)  ){
+		solveH(row + 1, col + 2)   
+		  ){
 		return true;
 	    }
 	    else {
@@ -70,8 +71,11 @@ public class KnightBoard {
 					  
 
     public static void main(String[] args) {
-        KnightBoard board = new KnightBoard(7,7);
+        KnightBoard board = new KnightBoard(6,6);
 	System.out.println(board.solve());
 	System.out.println(board);
+	KnightBoard board1 = new KnightBoard(7,7);
+	System.out.println(board1.solve());
+	System.out.println(board1);
     }
 } 
