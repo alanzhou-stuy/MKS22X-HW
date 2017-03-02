@@ -19,15 +19,29 @@ public class Maze{
     */
 
     public Maze(String filename){
-	File text = new File(filename); 
-        Scanner inf = new Scanner(text);
-        int lineNumber = 1;
-        while(inf.hasNextLine()){
-            String line = inf.nextLine();
-            System.out.println(line);
-        }	       
-	animate = false;
-	
+	try {
+	    int counter,eCounter,sCounter = 0;
+	    File text = new File(filename); 
+	    Scanner inf = new Scanner(text);
+	    while(inf.hasNextLine()){
+		String line = inf.nextLine();
+		for (int i = 0; i < line.length(); i ++ ) {
+		    maze[counter][i] = line.charAt(i);
+		    if (line.charAt(i) == 'S') {
+			sCounter += 1;
+		    }
+		    if (line.charAt(i) == 'E')  {
+			eCounter += 1;
+		    }
+		}
+		counter += 1;
+	    }
+	    animate = false;
+	}
+	catch(FilesNotFoundException j) {
+	    System.out.println("File not found."); 
+	    System.exit(0);
+	}	       	
     }
     
 
@@ -75,9 +89,9 @@ public class Maze{
             System.out.println("\033[2J\033[1;1H"+this);
             wait(20);
         }
+	else {
 
-
-
+	}
         return false; //so it compiles
     }
 
