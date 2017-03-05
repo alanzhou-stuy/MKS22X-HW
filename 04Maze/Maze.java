@@ -7,8 +7,8 @@ public class Maze{
     private int startingX,startingY,endingX,endingY;
     
     public Maze(String filename){
-	startingX = -1;
-	startingY = -1;
+	//startingX = -1;
+	//startingY = -1;
 	try {
 	    File text = new File(filename); 
 	    Scanner inf = new Scanner(text);
@@ -18,7 +18,9 @@ public class Maze{
 		    x++;
 		    y = inf.nextLine().length();
 	    }
+	    inf.close();
 	    maze = new char[x][y];
+	    inf = new Scanner(text);
 	    int counter = 0;
 	    while(inf.hasNext()){
 		String line = inf.nextLine();
@@ -69,32 +71,28 @@ public class Maze{
 	return solve(startr,startc);
     }
 
-    /*
-      Recursive Solve function:
-
-      A solved maze has a path marked with '@' from S to E.
-
-      Returns true when the maze is solved,
-      Returns false when the maze has no solution.
-
-
-      Postcondition:
-
-        The S is replaced with '@' but the 'E' is not.
-
-        All visited spots that were not part of the solution are changed to '.'
-        All visited spots that are part of the solution are changed to '@'
-    */
     private boolean solve(int row, int col){
         if(animate){
             System.out.println("\033[2J\033[1;1H"+this);
             wait(20);
         }
-	else {
-
+	if (maze[row][col] == 'E') {
+	    return true;
 	}
-        return false; //so it compiles
+	if (maze[row][col] == ' ') {
+	    maze[row][col] = '@';
+	    if (solve(row + 1,col)|| solve(row - 1,col) || solve(row, col + 1) || solve (row, col - 1)) {
+		return true;
+	    }
+	    else{
+		maze[row][col] = '.';
+	    }
+	}
+	
+	
+        return false;
     }
+
 
 
 }
