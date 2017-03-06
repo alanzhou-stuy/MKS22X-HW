@@ -93,6 +93,19 @@ public class Maze{
         return false;
     }
 
+    public String toString(){
+	String x = "";
+	for(int i = 0; i < maze.length;i++){
+	    for(int k = 0; k < maze[0].length;k++){
+		layout += maze[i][k];
+		if(k == maze[0].length - 1){
+		    layout += "\n";
+		}
+	    }
+	}
+	return x;
+    }
+
 
 
 }
