@@ -5,7 +5,7 @@ public class USACO {
     private int[][] lake;
     private int R,C,E,N,R_s,C_s,D_s;
 
-    private int [][] field;
+    private int [][] field,field1;
     private int N1,M1,time,R1,C1,R2,C2;
 
 
@@ -79,62 +79,93 @@ public class USACO {
 	return answer * 72 * 72;
     }
 
-    
-	    
-	/*int counter = 1;
-	while(scan.hasNextLine()) {
-	    if (counter == 1) {
-		String store = scan.nextLine();
-		R = store.substring(0,store.indexOf(" ") + 1);
-		store = store.substring(store.indexOf(" ") + 1);
-		C = store.substring(0,store.indexOf(" ") + 1);
-		store = store.substring(store.indexOf(" ") + 1);
-		E = store.substring(0,store.indexOf(" ") + 1);
-	        store = store.substring(store.indexOf(" ") + 1);
-		N = store.substring(0,store.indexOf(" ") + 1);
-	    }
-	    if (counter > 1 && counter <= R + 1) {
-		String store1 = scan.nextLine();
-		
-
-	    }
-	    counter += 1;
-
-	    }*/
-
-    /*public int silver(String filename) {
+    public int silver(String filename) {
 	int solution = 0;
 	try {
 	    File text = new File(filename);
 	    Scanner scan = new Scanner(text);
+	    // Scanner scan1 = new Scanner(scan.nextLine());
 	    N1 = scan.nextInt();
 	    M1 = scan.nextInt();
 	    time = scan.nextInt();
 	    field = new int[N1][M1];
+	    field1 = new int[N1][M1];
 	    for (int i = 0; i < N1; i++) {
 		String x = scan.next();
 		for (int j = 0; j < M1; j++) {
 	        if (x.charAt(j) == '.') {
 		    field[i][j] = 0;
+		    field1[i][j] = 0;
 		}
-		if (x.charAt(j) == '*') {
-		    field[i][j] = 1;
+	        else{
+		    field[i][j] = -1;
+		    field1[i][j] = -1;
 		}
 		}	   
 	    }
-	    R1 = scan.nextInt();
-	    C1 = scan.nextInt();
-	    R2 = scan.nextInt();
-	    C2 = scan.nextInt();
-	   
-
-
-	    return solution;
+	    //Scanner scan2 = new Scanner(scan.nextLine());
+	    R1 = scan.nextInt() - 1;
+	    C1 = scan.nextInt() - 1;
+	    //System.out.println(R1 + " " + C1);
+	    field[R1][C1] = 1;
+	    R2 = scan.nextInt() - 1;
+	    C2 = scan.nextInt() - 1;
+	    for(int i = 0; i < time; i++){
+		if( i % 2 == 1){
+		    for (int r = 0; r < N1; r++){
+			for(int c = 0; c < M1; c++){
+			    if (field1[r][c] > 0){
+				helper(r,c,field,field1[r][c]);
+				field1[r][c] = 0;
+			    }
+			}
+		    }
+		}
+		else{
+		    for(int r = 0; r < N1; r++){
+			for(int c = 0; c < M1; c++){
+			    if(field[r][c] > 0){
+			        helper(r,c,field1,field[r][c]);
+				field[r][c] = 0;
+			    }
+			}
+		    }
+		}
+	    }
+	    /*for (int i = 0; i < N1; i++) {
+		for (int j = 0; j < M1; j++) {
+		    System.out.print(field[i][j] + " ");
+		}
+		System.out.println();
+		}*/
+	    solution = field[R2][C2] + field1[R2][C2];
+	    return solution; 
 	}
 	catch(FileNotFoundException j) {
-	    System.out.println("No file found.");
+	    System.out.println("File not found.");
+	    System.exit(0);
 	}
-	}*/
+	return 0 ;
+	}
+
+    public static void helper(int r, int c, int[][] field,int n) {
+	if (field[r][c] != -1) {
+	    if (r > 0) {
+		field[r-1][c] += n;
+	    }
+	    if (c > 0) {
+		field[r][c-1] += n;
+	    }
+	    if (r < field.length - 1) {
+		field[r + 1][c] += n;
+	    }
+	    if (c < field[0].length - 1) {
+		field[r][c + 1] += n;
+	    }
+	    
+	}
+
+    }
 
 
    
@@ -142,6 +173,7 @@ public class USACO {
     public static void main(String[]args) {
 	USACO x = new USACO(); //does not have to do anything. 
 	System.out.println(x.bronze("test1.java"));
+	System.out.println(x.silver("test2.java"));
     }
 }
 
