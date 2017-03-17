@@ -71,25 +71,33 @@ public class Quick {
 		temp[counter1] = data[i];
 		counter1 --;
 	    }
+	    if (counter + (end - counter1) == end) {
+		temp[counter] = randomPivot;
+		for (int j = start; j <= end; j++) {
+		    data[j] = temp[j];
+		}
+		answer = counter;
+	    }		    
 	}
-	data = temp;
-	System.out.println("Pivot: " + randomPivot);
+	//System.out.println("Pivot: " + randomPivot);
 	return answer;
     }
 
     public static void main(String[] args) {
 	int[]ary = { 2, 10, 15, 23, 0,  5};
-	System.out.println(part(ary,0,5) + "\n");
-	for (int i = 0; i < 6; i++) {
-	    System.out.println(ary[i]);
-	}
-	/*
+	int[]ary1 = {999,999,999,4,1,0,3,2,999,999,999};
+	//System.out.println(part(ary,0,5) + "\n");
+	//System.out.println(part(ary1,3,7) + "\n");
+	//	for (int i = 0; i < ary.length;i++) {
+	//    System.out.println(ary[i]);
+	//}
+	
 	System.out.println(quickselect( ary , 0 ));
 	System.out.println(quickselect( ary , 1 ));  
 	System.out.println(quickselect( ary , 2 ));  
 	System.out.println(quickselect( ary , 3 ));  
 	System.out.println(quickselect( ary , 4 ));  
 	System.out.println(quickselect( ary , 5 ));  	
-	*/
+	
 	}
 }
