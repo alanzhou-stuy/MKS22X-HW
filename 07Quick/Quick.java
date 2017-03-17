@@ -24,7 +24,7 @@ public class Quick {
 	
     }
 
-    public static int part ( int [] data, int start, int end){
+    /* public static int part ( int [] data, int start, int end){
 	int randomPivot = data[(int)(start + Math.random() * (end - start + 1) )];
 	//int randomPivot = 0;
 	int counter1 = 0;
@@ -36,7 +36,6 @@ public class Quick {
 		counter1 += 1;
 	    }
 	    if (data[i] > randomPivot) {
-		//System.out.println("xd");
 		int temp = data[data.length  - 1 - counter];
 		data[data.length - 1 - counter] = data[i];
 		counter += 1;
@@ -50,12 +49,37 @@ public class Quick {
 	    }
 	   
 	}
-	System.out.println("Pivot: " + randomPivot);
+	System.out.println("Pivot: " + randomPivot + "\nCounter1: " + counter1);
 	return -1;
     }
+    */
+
+    public static int part ( int [] data, int start, int end){
+	int answer = 0;
+	int[] temp = new int[data.length];
+	int randomPivot = data[(int)(start + Math.random() * (end - start + 1) )];	
+	int counter1 = end;
+	int counter = start;
+	for (int i = start; i <= end ; i ++) {
+	    //if (data[i] == randomPivot) {	
+	    //}
+	    if (data[i] < randomPivot) {
+		temp[counter] = data[i];
+		counter ++;
+	    }
+	    if (data[i] > randomPivot) {
+		temp[counter1] = data[i];
+		counter1 --;
+	    }
+	}
+	data = temp;
+	System.out.println("Pivot: " + randomPivot);
+	return answer;
+    }
+
     public static void main(String[] args) {
 	int[]ary = { 2, 10, 15, 23, 0,  5};
-	System.out.println(part(ary,1,5) + "\n");
+	System.out.println(part(ary,0,5) + "\n");
 	for (int i = 0; i < 6; i++) {
 	    System.out.println(ary[i]);
 	}
