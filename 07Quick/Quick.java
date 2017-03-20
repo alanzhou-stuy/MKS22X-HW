@@ -3,6 +3,12 @@ import java.io.*;
 
 public class Quick {
 
+    public static void swap (int[] data, int first, int second) {
+	int temp = data[first];
+	data[first] = data[second];
+	data[second] = temp;
+    }
+    
     public static int quickselect(int []data, int k){
 	return helper (data,k,0,data.length - 1 );
     }
@@ -83,6 +89,31 @@ public class Quick {
 	return answer;
     }
     
+    public static void quickSortH( int [] data, int lt, int gt,int i){
+	int v = data[(int)(lt + Math.random() * (gt - lt + 1) )];	
+	while (i <= gt) {
+	    if (data[i] < v) {
+		swap(data,i,lt);
+		lt++;
+		i++;
+	    }
+	    else if (data[i] > v) {
+		swap(data,i,gt);
+		gt--;
+	    }
+	    else {
+		i++;
+	    }
+	}
+	quickSortH(data,0,gt,0);
+	quickSortH(data,lt,data.length - 1,0);
+	
+    }
+
+    public static void quickSort(int[] data){
+	quickSortH(data,0,data.length - 1, 0);
+    }
+    
     public static void main(String[] args) {
 	int[]ary = { 2, 10, 15, 23, 0,  5};
 	int[]ary1 = {999,999,999,4,1,0,3,2,999,999,999};
@@ -92,12 +123,15 @@ public class Quick {
 	//    System.out.println(ary[i]);
 	//}
 	
-	System.out.println(quickselect( ary , 0 ));
-	System.out.println(quickselect( ary , 1 ));  
-	System.out.println(quickselect( ary , 2 ));  
-	System.out.println(quickselect( ary , 3 ));  
-	System.out.println(quickselect( ary , 4 ));  
-	System.out.println(quickselect( ary , 5 ));  	
-	
+	//System.out.println(quickselect( ary , 0 ));
+	//System.out.println(quickselect( ary , 1 ));  
+	//System.out.println(quickselect( ary , 2 ));  
+	//System.out.println(quickselect( ary , 3 ));  
+	//System.out.println(quickselect( ary , 4 ));  
+	//System.out.println(quickselect( ary , 5 ));  	
+	quickSort(ary);
+	for (int i = 0; i < ary.length;i++) {
+	    System.out.println(ary[i]);
+	}
 	}
 }
