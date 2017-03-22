@@ -122,11 +122,7 @@ public class Quick {
 	quickSortH(data,0,data.length - 1);
     }
 
-    public static int quickSelectH (int[]data, int start, int end, int k) {
-	if (data[start] == k) {
-	    return data[k];
-	}
-	else {
+    public static int partitionDutchFlagHelper(int[]data,int start, int end) {
 	int i = start;
 	int lt = start;
 	int gt = end;
@@ -146,15 +142,28 @@ public class Quick {
 	    else {
 		i++;
 	    }
-	}
-	if (k > v) {
-	    quickSelectH(data,gt,end,k);
-	}
-	if (k < v) {
-	    quickSelectH(data,start,lt,k);
-	}
+	    if ( i == v1) {
+		return data[i];
+	    }
 	}
 	return -1;
+    }
+
+    public static int quickSelectH (int[]data, int start, int end, int k) {
+	if (start == end) {
+	    return data[end];
+	}
+	int v = partitionDutchFlagHelper(data,start,end);
+	if (v == k) {
+	    return data[v];
+	}
+	else if (v > k) {
+	    return quickSelectH(data,v,end, k);
+	}
+	else {
+	    return quickSelectH(data,start,v,k);
+	}
+
     }
 
     public static int quickSelect(int[]a,int k) {
