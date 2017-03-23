@@ -93,28 +93,28 @@ public class Quick {
 	if ( end <= start + 1) {
 	}
 	else {
-	int i = start;
-	int lt = start;
-	int gt = end;
-	int v1 = (int)(lt + Math.random() * (gt - lt + 1) );
-	int v = data[v1];
-	swap(data,start,v1);
-	while (i <= gt) {
-	    if (data[i] < v) {
-		swap(data,i,lt);
-		lt++;
-		i++;
+	    int i = start;
+	    int lt = start;
+	    int gt = end;
+	    int v1 = (int)(lt + Math.random() * (gt - lt + 1) );
+	    int v = data[v1];
+	    swap(data,start,v1);
+	    while (i <= gt) {
+		if (data[i] < v) {
+		    swap(data,i,lt);
+		    lt++;
+		    i++;
+		}
+		else if (data[i] > v) {
+		    swap(data,i,gt);
+		    gt--;
+		}
+		else {
+		    i++;
+		}
 	    }
-	    else if (data[i] > v) {
-		swap(data,i,gt);
-		gt--;
-	    }
-	    else {
-		i++;
-	    }
-	}
-	quickSortH(data,gt,end);
-	quickSortH(data,start,lt);
+	    quickSortH(data,gt,end);
+	    quickSortH(data,start,lt);
 	}
     }
 
@@ -122,7 +122,7 @@ public class Quick {
 	quickSortH(data,0,data.length - 1);
     }
 
-    public static int partitionDutchFlagHelper(int[]data,int start, int end) {
+    /*public static int partitionDutchFlagHelper(int[]data,int start, int end) {
 	int i = start;
 	int lt = start;
 	int gt = end;
@@ -147,23 +147,78 @@ public class Quick {
 	    }
 	}
 	return -1;
-    }
+    }*/
 
     public static int quickSelectH (int[]data, int start, int end, int k) {
-	if (start == end) {
-	    return data[end];
+	int lt = start;
+	int gt = end;
+	int v1 = (int)(start + Math.random() * (end - start + 1) );
+	int v = data[v1];
+	int i = start;
+	swap(data, start, v1);
+	while(i <= gt){
+	    if(data[i] > v){	        
+		swap(data, i, gt);
+		gt --;
+	    }
+	    else if (data[i] < v){
+		swap(data, i, lt);
+		i ++;
+		lt ++;
+	    }
+	    else {
+		i++;
+	    }
 	}
-	int v = partitionDutchFlagHelper(data,start,end);
-	if (v == k) {
-	    return data[v];
+	while ( k < lt || k > gt) {
+	    if (k < lt) {
+		end = lt;
+		lt = start;
+		gt = end;
+		v1 = (int)(start + Math.random() * (end - start + 1) );
+		v = data[v1];
+		i = start;
+		swap(data, start, v1);
+		while(i <= gt){
+		    if(data[i] > v){	        
+			swap(data, i, gt);
+			gt --;
+		    }
+		    else if (data[i] < v){
+			swap(data, i, lt);
+			i ++;
+			lt ++;
+		    }
+		    else {
+			i++;
+		    }
+		}
+	    }
+	    else {
+		start = gt;
+		lt = start;
+		gt = end;
+		v1 = (int)(start + Math.random() * (end - start + 1) );
+		v = data[v1];
+		i = start;
+		swap(data, start, v1);
+		while(i <= gt){
+		    if(data[i] > v){	        
+			swap(data, i, gt);
+			gt --;
+		    }
+		    else if (data[i] < v){
+			swap(data, i, lt);
+			i ++;
+			lt ++;
+		    }
+		    else {
+			i++;
+		    }
+		}
+	    }
 	}
-	else if (v > k) {
-	    return quickSelectH(data,v,end, k);
-	}
-	else {
-	    return quickSelectH(data,start,v,k);
-	}
-
+	return data[k];
     }
 
     public static int quickSelect(int[]a,int k) {
@@ -187,9 +242,9 @@ public class Quick {
 	//System.out.println(quickselect( ary , 4 ));  
 	//System.out.println(quickselect( ary , 5 ));  	
 	//quickSort(ary2);
-	System.out.println(quickSelect(ary,1));
-	//for (int i = 0; i < ary.length;i++) {
-	//    System.out.println(ary2[i]);
-	//}
+	System.out.println("Answer: " + quickSelect(ary2,7));
+	for (int i = 0; i < ary.length;i++) {
+	    System.out.println(ary2[i]);
+	}
 	}
 }
