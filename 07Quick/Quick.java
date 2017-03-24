@@ -226,15 +226,15 @@ public class Quick {
     }
     
     public static void main(String[] args) {
-	int[]ary = { 2, 10, 15, 23, 0,  5};
+	int[]ary = {};
 	int[]ary1 = {999,999,999,4,1,0,3,2,999,999,999};
 	int[]ary2 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	//System.out.println(part(ary,0,5) + "\n");
 	//System.out.println(part(ary1,3,7) + "\n");
-	//	for (int i = 0; i < ary.length;i++) {
+	//quickSort(ary);
+	//for (int i = 0; i < ary.length;i++) {
 	//    System.out.println(ary[i]);
 	//}
-	
 	//System.out.println(quickselect( ary , 0 ));
 	//System.out.println(quickselect( ary , 1 ));  
 	//System.out.println(quickselect( ary , 2 ));  
@@ -242,9 +242,10 @@ public class Quick {
 	//System.out.println(quickselect( ary , 4 ));  
 	//System.out.println(quickselect( ary , 5 ));  	
 	//quickSort(ary2);
-	System.out.println("Answer: " + quickSelect(ary2,7));
-	for (int i = 0; i < ary.length;i++) {
-	    System.out.println(ary2[i]);
-	}
+	//System.out.println("Answer: " + quickSelect(ary2,7));
+	//for (int i = 0; i < ary.length;i++) {
+	//    System.out.println(ary2[i]);
+	//}
+	
 	}
 }
