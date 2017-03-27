@@ -1,14 +1,21 @@
 public class Merge {
 
-    public static void mergeSort(int[]ary) {
-	if (true){
+     public static void mergeSort(int[]ary){
+	if (ary.length == 1){
+	    return;
 	}
-	else {
-	    int[]left = copy of the left side;
-	    int[]right = copy of the right side;
-	    merge(left);
-	    merge(right);
-	    mergeTheTwoHalvesIntoTheOriginalArray;
+	else{	    
+	    int[] left = new int[ary.length / 2];
+	    int[] right = new int[ary.length - ary.length / 2];
+	    for (int i = 0; i < ary.length / 2; i++){
+		left[i] = ary[i];
+	    }
+	    for (int i = ary.length / 2; i < ary.length; i++){
+		right [i - ary.length / 2] = ary[i];
+	    }
+	    mergeSort(left);
+	    mergeSort(right);
+	    merge(left,right,ary);
 	}
     }
    
@@ -41,9 +48,15 @@ public class Merge {
 	int[] ary1 = {1,3,5,7};
 	int[] ary2 = {2,4,6,8,10};
 	int[] ary3 = {0,0,0,0,0,0,0,0,0};
+	int[] ary4 = {3,5,1,2,4,6,8,1,2,34,5676,45,4,4,22,11001010};
 	merge(ary1,ary2,ary3);
 	for (int i = 0; i < ary3.length; i ++ ){
 	    System.out.println(ary3[i]);
+	}
+	System.out.println("\n");	
+	mergeSort(ary4);
+	for (int i = 0; i < ary4.length; i ++ ){
+	    System.out.println(ary4[i]);
 	}
 
     }
