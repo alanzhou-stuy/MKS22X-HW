@@ -1,6 +1,6 @@
 public class Merge {
 
-     public static void mergeSort(int[]ary){
+     public static void mergesort(int[]ary){
 	if (ary.length == 1){
 	    return;
 	}
@@ -13,8 +13,8 @@ public class Merge {
 	    for (int i = ary.length / 2; i < ary.length; i++){
 		right [i - ary.length / 2] = ary[i];
 	    }
-	    mergeSort(left);
-	    mergeSort(right);
+	    mergesort(left);
+	    mergesort(right);
 	    merge(left,right,ary);
 	}
     }
@@ -54,7 +54,7 @@ public class Merge {
 	    System.out.println(ary3[i]);
 	}
 	System.out.println("\n");	
-	mergeSort(ary4);
+	mergesort(ary4);
 	for (int i = 0; i < ary4.length; i ++ ){
 	    System.out.println(ary4[i]);
 	}
