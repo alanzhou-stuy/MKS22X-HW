@@ -11,32 +11,47 @@ public class MyLinkedList {
 
     public String toString() {
 	String answer = "[ ";
-	for (LNode current = start; current.next() != null; end.next()) {
-	    answer += "" + current.value() + ", ";
+	LNode current = start;
+	while (current != null) {
+	    answer += "" + current.value();
+	    if (current.next() != null) {
+		answer += ", ";
+	    }
+	    current = current.next();
 	}
 	return answer += "]";
     }
-    
-    public boolean add(int value) {
-	try {
-	    if (size == 0) {
-		LNode x = new LNode(value);
-		start = x;
-		end = start;
-		size += 1;
-	    }else {
-		LNode x = new LNode(value);
-		end.nextLNode(x);
-		end = end.next();
-		size += 1;
+
+    public int get(int index) {
+	if(index < 0 || index >= size) {
+	    throw(new IndexOutOfBoundsException());
+	}
+	else {
+	    LNode p = start;
+	    int x = index;
+	    while(x > 0){
+		p = p.next();
+		x--;
 	    }
-	    return true;
-	} 
-	catch (Exception e){
-	    System.out.println("Invalid");
-	    return false;
+	    return p.value();
 	}
     }
+    
+    public boolean add(int x) {
+	LNode temp = new LNode(x);
+	if (start == null && end == null) {
+	    start = temp;
+	    end = temp;
+	    size ++;
+	}
+	else {
+	    end.nextLNode(temp);
+	    end = temp;
+	    size ++;
+	}
+	return true;
+    }
+
 
     public int size() {
 	return size;
@@ -48,6 +63,7 @@ public class MyLinkedList {
 	
 	public LNode (int x) {
 	    value = x;
+	    next = null;
 	}
 	
 	public LNode(int x, LNode y) {
