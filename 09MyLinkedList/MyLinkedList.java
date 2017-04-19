@@ -1,29 +1,81 @@
-public class MyLinkedList {
-    LNode start;
-    LNode end;
-    int size;
+import java.util.*;
+
+public class MyLinkedList <Integer> implements Iterable<Integer>{
+    private LNode start;
+    private LNode end;
+    private int size;
 
     public MyLinkedList() {
 	size = 0;
 	start = null;
 	end = null;
     }
-
-    //not done
-    private LNode getNthNode(int index){
-	if(index < 0 || index >= size) {
-	    throw(new IndexOutOfBoundsException());
+    
+    private class LNode {
+	public int value;
+	private LNode next, previous;
+	
+	public LNode (int x) {
+	    value = x;
+	    next = null;
+	    previous = null;
 	}
-	else {
-	    LNode p = start;
-	    int x = index;
-	    while(x > 0){
-		p = p.next;
-		x--;
-	    }
-	    return p;
+
+	public int getValue() {
+	    return value;
+	}
+	
+	public LNode(int x, LNode y) {
+	    value = x;
+	    next = y;
+	}
+	
+	public void nextLNode(LNode x) {
+	    next = x;
+	}
+
+	public void previousLNode(LNode x) {
+	    previous = x;
+	}
+	
+	public String toString(){
+	    return value+"";
 	}
     }
+
+    public Iterator<Integer> iterator() {
+	return new subClass();
+    }
+
+    public class subClass implements Iterator <Integer> {
+
+	public boolean hasNext() {
+	    return true;
+	}
+
+	public Integer next() {
+	    return start.getValue();
+	}
+
+	public void remove() {
+	    throw new UnsupportedOperationException();
+	}
+	
+    }
+
+    
+    private LNode getNthNode(int index){
+	if(index < 0 || index >= size) {
+	    throw new IndexOutOfBoundsException());
+    }
+    else {
+	    LNode p = start;
+	    for (int i = 0; i < index; i++) {
+		start = start.next;
+	    }
+    }
+    return ans;
+}
     
     public int set(int index, int value) {
 	LNode target = getNthNode(index);
@@ -133,55 +185,22 @@ public class MyLinkedList {
     }
     
     public boolean add(int x) {
-	/*LNode temp = new LNode(x);
-	if (start == null && end == null) {
-	    start = temp;
-	    end = temp;
-	    size ++;
-	}
-	else {
-	    end.nextLNode(temp);
-	    end = temp;
-	    size ++;
-	}
-	return true;*/
 	add(size,x);
 	return true;
     }
 
+    private void addAfter(LNode location, LNode toBeAdded) {
+	location.previous = toBeAdded;
+	location.next = toBeAdded.next;
+	toBeAdded.next = location;
+	toBeAdded.next.previous = location;
+	size++;
+    }
+    
     public int size() {
 	return size;
     } 
     
-    private class LNode {
-	public int value;
-	private LNode next, previous;
-	
-	public LNode (int x) {
-	    value = x;
-	    next = null;
-	    previous = null;
-	}
-	
-	public LNode(int x, LNode y) {
-	    value = x;
-	    next = y;
-	}
-	
-	public void nextLNode(LNode x) {
-	    next = x;
-	}
-
-	public void previousLNode(LNode x) {
-	    previous = x;
-	}
-	
-	public String toString(){
-	    return value+"";
-	}
-
-
-    }
     public static void main(String[] args) {
 	MyLinkedList a = new MyLinkedList();
 	a.add(3);
