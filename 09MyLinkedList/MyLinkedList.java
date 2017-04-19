@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MyLinkedList <Integer> implements Iterable<Integer>{
+public class MyLinkedList implements Iterable<Integer>{
     private LNode start;
     private LNode end;
     private int size;
@@ -47,24 +47,22 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
 	return new subClass(this);
     }
 
-    public class subClass implements Iterator <Integer> {
+    private class subClass implements Iterator <Integer> {
 	MyLinkedList y;
-	LNode x;
+	int index;
 
 	public subClass(MyLinkedList z) {
 	    z = y;
-	    x = z.start;
 	}
 
 	public boolean hasNext() {
-	    return x != y.end;
+	    return y.size > index;
 	}
 
 	public Integer next() {
 	    if (hasNext()) {
-		int x1 = x.value;
-		x = x.next;
-		return x1;
+	        index ++;
+		return y.get(index - 1);
 	    }
 	    else {
 		throw new NoSuchElementException();
