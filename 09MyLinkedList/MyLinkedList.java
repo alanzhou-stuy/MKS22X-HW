@@ -66,18 +66,21 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
     
     private LNode getNthNode(int index){
 	if(index < 0 || index >= size) {
-	    throw new IndexOutOfBoundsException());
-    }
-    else {
+	    throw new IndexOutOfBoundsException();
+	}
+	else {
 	    LNode p = start;
 	    for (int i = 0; i < index; i++) {
 		start = start.next;
 	    }
+	}
+	return ans;
     }
-    return ans;
-}
     
     public int set(int index, int value) {
+	if (index >= size || index < 0) {
+	    throw new IndexOutOfBoundsException("Index out of Bounds");
+	}
 	LNode target = getNthNode(index);
 	int ans = target.value;
 	target.value = value;
@@ -124,8 +127,25 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
 	remove(temp);
 	size --;
 	return answer;
+    }
+    
+    public int indexOf(int value){
+	LNode node = start;
+	int x = 0;
+	while (node.getNext() != null) {
+	    if (node.getValue() == value) {
+		return index;
+	    }
+	    node = node.getNext();
+	    x ++;
 	}
+	if (node.getValue() == value) {
+	    return x;
+	} 
+	return -1;
 
+    }
+    
     public String toString() {
 	String answer = "[";
 	LNode current = start;
@@ -195,6 +215,16 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
 	toBeAdded.next = location;
 	toBeAdded.next.previous = location;
 	size++;
+    }
+
+    public int set(int index, int val) {
+	if (index >= size || index < 0) {
+	    throw new IndexOutOfBoundsException();
+	}
+	else {
+	    getNthNode(index).value = val;
+	    return val;
+	}
     }
     
     public int size() {
