@@ -7,8 +7,7 @@ public class MyLinkedList implements Iterable<Integer>{
 
     public MyLinkedList() {
 	size = 0;
-	start = null;
-	end = null;
+
     }
     
     private class LNode {
@@ -48,26 +47,36 @@ public class MyLinkedList implements Iterable<Integer>{
     }
 
     private class subClass implements Iterator <Integer> {
-	MyLinkedList y;
 	int index;
-
+	LNode x;
+	
 	public subClass(MyLinkedList z) {
-	    z = y;
+	    x = z.start;
+	    index = 0;
 	}
 
 	public boolean hasNext() {
-	    return y.size > index;
+	    return x.next != null;
 	}
 
 	public Integer next() {
-	    if (hasNext()) {
-	        index ++;
-		return y.get(index - 1);
+	    if (index == 0) {
+		index ++;
+		return x.value;
 	    }
 	    else {
-		throw new NoSuchElementException();
+		if (hasNext()) {
+		    x = x.next;
+		    index ++;
+		    return x.value;
+		}
+		else {
+		    throw new NoSuchElementException();
+		}
 	    }
 	}
+	
+       
 
 	public void remove() {
 	    throw new UnsupportedOperationException();
@@ -77,12 +86,15 @@ public class MyLinkedList implements Iterable<Integer>{
 
     
     private LNode getNthNode(int index){
-	if(index < 0 || index >= size) {
+	if(index < 0 || index > size - 1) {
 	    throw new IndexOutOfBoundsException();
 	}
 	LNode p = start;
-	for (int i = 0; i < index; i++) {
-	    p = p.next;
+	while (index > 0) {
+	    if (index < size()) {
+		p = p.next;
+		index --;
+	    }
 	}
 	return p;
     }
@@ -100,16 +112,15 @@ public class MyLinkedList implements Iterable<Integer>{
 	    size --;
 	}
 	else if (target == end) {
-	    target.previous.next = null;
-	    target.previous = null;
-	    end = target.previous.next;
+	    end = end.previous;
+	    end.next = null;
 	    size --;
 	}
 	else {
 	    target.previous.next = target.next;
 	    target.next.previous = target.previous;
 	    size --;
-	}
+	    }
     }
 
     public int remove(int index){
@@ -119,7 +130,7 @@ public class MyLinkedList implements Iterable<Integer>{
 	LNode temp = start;
 	int counter = 0; 
 	int answer = 0; 
-	while (counter != index) {
+	while (counter < index) {
 	    counter ++;
 	    temp = temp.next;
 	    }
@@ -166,35 +177,34 @@ public class MyLinkedList implements Iterable<Integer>{
 	if (index < 0 || index > size) {
 	    throw new IndexOutOfBoundsException();
 	}
-	LNode new1 = new LNode(value);
-	if (size == 0) {
-	    start = new1;
-	    end = new1;
-	    size ++;
-	}
-	else if (index == 0) {
-	    new1.next = start;
-	    start.previous = new1;
-	    start = new1;
-	    size ++;
-	}
-	else if (index == size) {
-	    end.next = new1;
-	    new1.previous = end;
-	    end = new1;
-	    size ++;
-	}
-	else {
-	    LNode temp = new LNode(size);
-	    int x = 0;
-	    while ( x < index) {
-		temp = temp.next;
+	else  {
+	    LNode new1 = new LNode(value);
+	    if (index == 0) {
+		if ( size == 0) {
+		    start = new1;
+		    end = new1;
+		    size ++;
+		}
+		else {
+		    new1.next = start;
+		    start.previous = new1;
+		    start = new1;
+		    size ++;
+		}
 	    }
-	    temp.next = new1;
-	    new1.previous = temp;
-	    new1.next = temp;
-	    temp.previous = new1;
-	    size ++; 
+	    else if (index == size) {
+	         end.next = new1;
+		 new1.previous = end;
+		 end = new1;
+		 size ++;
+	    }
+	    else {
+		new1.previous = getNthNode(index - 1);
+		new1.next = getNthNode(index);
+		getNthNode(index).previous = new1;
+		getNthNode(index - 1).next = new1;
+		size ++;
+	    }
 	}
     }
     
@@ -226,21 +236,38 @@ public class MyLinkedList implements Iterable<Integer>{
     } 
     
     public static void main(String[] args) {
-	MyLinkedList a = new MyLinkedList();
-	a.add(3);
-	a.add(4);
-	a.add(5);
-	//System.out.println(a.size());
-	System.out.println(a.get(2));
-	System.out.println(a);
-	System.out.println(a.getNthNode(2));
-	a.remove(1);
-	System.out.println(a);
-	System.out.println(a.size);
-	System.out.println(a.set(1,10));
-	//System.out.println(a);
 	
+	//Testing: constructor, toString, size, add, get, remove
+	
+	MyLinkedList a= new MyLinkedList();
+	System.out.println(a.toString()+"\nSize: "+a.size());//[], size=0
+	for(int i=0; i<20; i++){
+	    a.add(i);
+	    if(a.get(a.size()-1)%2==0)
+		a.remove(a.size()-1);
+	    //System.out.println(a);//Check if all nums arent odd
+	}
+	
+	System.out.println(a+"\nSize: "+a.size());//odds 0-20 in order, size=10
+	
+	//Testing: set, indexOf, add(i,v); reinforce others
+	for(int i=0; i<10; i++){
+	    a.set(i,i*100);
+	}
+	
+	System.out.println(a+"\nSize: "+a.size());//mulitples of 100, size=10
+	for(int i=0; i<10; i++){
+	    a.set(i,a.indexOf(i*100));
+	}
+	
+        System.out.println(a+"\nSize: "+a.size());//0-9 in order, size=10
+	a.remove(1);
+	a.add(1,1);
+	for(int i=0; i<10; i++){
+	    a.add(0,i*-1-1);
+	}
+	a.add(a.size(),10);
+	
+	System.out.println(a+"\nSize: "+a.size());//-10-10 in order, size=21
     }
-
-
 }
