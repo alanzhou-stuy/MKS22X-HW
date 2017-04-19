@@ -236,6 +236,7 @@ public class MyLinkedList implements Iterable<Integer>{
     } 
     
     public static void main(String[] args) {
+	//Someone else's test cases
 	
 	//Testing: constructor, toString, size, add, get, remove
 	
