@@ -44,17 +44,31 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
     }
 
     public Iterator<Integer> iterator() {
-	return new subClass();
+	return new subClass(this);
     }
 
     public class subClass implements Iterator <Integer> {
+	MyLinkedList y;
+	LNode x;
+
+	public subClass(MyLinkedList z) {
+	    z = y;
+	    x = z.start;
+	}
 
 	public boolean hasNext() {
-	    return true;
+	    return x != y.end;
 	}
 
 	public Integer next() {
-	    return start.getValue();
+	    if (hasNext()) {
+		int x1 = x.value;
+		x = x.next;
+		return x1;
+	    }
+	    else {
+		throw new NoSuchElementException();
+	    }
 	}
 
 	public void remove() {
@@ -68,23 +82,11 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
 	if(index < 0 || index >= size) {
 	    throw new IndexOutOfBoundsException();
 	}
-	else {
-	    LNode p = start;
-	    for (int i = 0; i < index; i++) {
-		start = start.next;
-	    }
+	LNode p = start;
+	for (int i = 0; i < index; i++) {
+	    p = p.next;
 	}
-	return ans;
-    }
-    
-    public int set(int index, int value) {
-	if (index >= size || index < 0) {
-	    throw new IndexOutOfBoundsException("Index out of Bounds");
-	}
-	LNode target = getNthNode(index);
-	int ans = target.value;
-	target.value = value;
-	return ans;
+	return p;
     }
 
     private void remove(LNode target){
@@ -132,11 +134,11 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
     public int indexOf(int value){
 	LNode node = start;
 	int x = 0;
-	while (node.getNext() != null) {
+	while (node.next != null) {
 	    if (node.getValue() == value) {
-		return index;
+		return x;
 	    }
-	    node = node.getNext();
+	    node = node.next;
 	    x ++;
 	}
 	if (node.getValue() == value) {
@@ -161,11 +163,6 @@ public class MyLinkedList <Integer> implements Iterable<Integer>{
 
     public int get(int index) {
 	return getNthNode(index).value;
-    }
-
-
-    public int indexOf(int value){
-	return 1;
     }
 
     public void add(int index,int value){
