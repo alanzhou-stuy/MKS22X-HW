@@ -125,7 +125,6 @@ public class MyLinkedList implements Iterable<Integer>{
 	    }
 	answer = temp.value;
 	remove(temp);
-	size --;
 	return answer;
     }
     
@@ -231,12 +230,16 @@ public class MyLinkedList implements Iterable<Integer>{
 	a.add(3);
 	a.add(4);
 	a.add(5);
-	System.out.println(a.size());
+	//System.out.println(a.size());
 	System.out.println(a.get(2));
 	System.out.println(a);
 	System.out.println(a.getNthNode(2));
 	a.remove(1);
-	System.out.print(a);
+	System.out.println(a);
+	System.out.println(a.size);
+	System.out.println(a.set(1,10));
+	//System.out.println(a);
+	
     }
 
 
