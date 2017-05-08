@@ -8,6 +8,7 @@ public class MyHeap {
     public MyHeap() {
 	array = new String[17];
 	size = 0;
+	constant = 1;
     }
 
     public MyHeap(boolean x) {
@@ -40,18 +41,6 @@ public class MyHeap {
 	}
     }
 
-    public String remove() {
-	if (size == 0) {
-	    throw new NoSuchElementException();
-	}
-	String temp = array[1];
-	array[1] = array[size];
-	array[size] = null;
-	pushDown();
-	size --;
-	return temp;
-    }
-
     public String peek() {
 	if (size == 0) {
 	    throw new NoSuchElementException();
@@ -72,14 +61,48 @@ public class MyHeap {
 	}
     }
 
+    public String remove() {
+	if (size == 0) {
+	    throw new NoSuchElementException();
+	}
+	String temp = array[1];
+	array[1] = array[size];
+	array[size] = null;
+	size --;
+	pushDown();
+	return temp;
+    }
+
     private void pushDown() {
-	for (int i = 1; i < size; i = i *2) {
-	    if (array[i].compareTo(array[i + 1]) * constant >= 0) {
-		array[i / 2] = array[i];
+	for (int i = 1; i * 2 < size; i = i *2) {
+	    String val = array[i];
+	    if (array[i * 2] != null && array[i * 2 + 1] != null) {
+		if (array[i * 2].compareTo(array[i * 2 + 1]) * constant >= 0) {
+		    if (val.compareTo(array[i * 2]) * constant >= 0) {
+			array[i] = array[i * 2];
+			array[i * 2] = val;
+		    }
+		    else {
+			break;
+		    }
+		}
+		else if (val.compareTo(array[i * 2 + 1]) * constant >= 0) {
+		    array[i] = array[i * 2 + 1];
+		    array[i * 2 + 1] = val;
+		}
+		else {
+		    break;
+		}
 	    }
 	    else {
-		array[i / 2] = array[i + 1];
-	    }
+		if (array[i].compareTo(array[i * 2] * constant >= 0)) {
+			array[i] = array[i * 2];
+			array[i * 2 ] = val;
+		    }
+		else {
+		    break;
+		}
+	    }    
 	}
     }
     
@@ -101,6 +124,7 @@ public class MyHeap {
 	test.add("F ");
 	test.add("G ");
 	test.add("H ");
+	test.remove();
 	test.remove();
 	System.out.println(test);
     }
