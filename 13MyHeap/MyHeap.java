@@ -72,13 +72,12 @@ public class MyHeap {
 	pushDown();
 	return temp;
     }
-
     private void pushDown() {
 	for (int i = 1; i * 2 < size; i = i *2) {
 	    String val = array[i];
-	    if (array[i * 2] != null && array[i * 2 + 1] != null) {
+	    if (array[i * 2] != null || array[i * 2 + 1] != null) {
 		if (array[i * 2].compareTo(array[i * 2 + 1]) * constant >= 0) {
-		    if (val.compareTo(array[i * 2]) * constant >= 0) {
+		    if (val.compareTo(array[i * 2]) * constant <= 0) {
 			array[i] = array[i * 2];
 			array[i * 2] = val;
 		    }
@@ -86,7 +85,7 @@ public class MyHeap {
 			break;
 		    }
 		}
-		else if (val.compareTo(array[i * 2 + 1]) * constant >= 0) {
+		else if (val.compareTo(array[i * 2 + 1]) * constant <= 0) {
 		    array[i] = array[i * 2 + 1];
 		    array[i * 2 + 1] = val;
 		}
@@ -95,7 +94,7 @@ public class MyHeap {
 		}
 	    }
 	    else {
-		if (array[i].compareTo(array[i * 2] * constant >= 0)) {
+		if (array[i].compareTo(array[i * 2]) * constant >= 0) {
 			array[i] = array[i * 2];
 			array[i * 2 ] = val;
 		    }
@@ -116,15 +115,20 @@ public class MyHeap {
 
     public static void main(String[] args) {
 	MyHeap test = new MyHeap(true);
-	test.add("A ");
-	test.add("B ");
-	test.add("C ");
-	test.add("D ");
-	test.add("E ");
-	test.add("F ");
-	test.add("G ");
-	test.add("H ");
+	test.add("a ");
+	test.add("b ");
+	test.add("c ");
+	test.add("d ");
+	test.add("e ");
+	System.out.println(test);
 	test.remove();
+	System.out.println(test);
+	test.remove();
+	System.out.println(test);
+	test.remove();
+	System.out.println(test);
+	test.remove();
+	System.out.println(test);
 	test.remove();
 	System.out.println(test);
     }
