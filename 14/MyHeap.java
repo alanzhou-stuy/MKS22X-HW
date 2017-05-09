@@ -1,12 +1,12 @@
 import java.util.*;
 
-public class MyHeap {
-    int[] array;
+public class MyHeap{
+    Integer[] array;
     int constant;
     int size;
 
     public MyHeap() {
-	array = new int[17];
+	array = new Integer[17];
 	size = 0;
 	constant = 1;
     }
@@ -18,19 +18,19 @@ public class MyHeap {
 	else {
 	    constant = -1;
 	}
-	array = new int[17];
+	array = new Integer[17];
 	size = 0;
     }
     
     private void resize() {
-	int[] temp = new int[size * 2 + 1];
+	Integer[] temp = new Integer[size * 2 + 1];
 	for (int i = 1; i < array.length; i++) {
 	    temp[i] = array[i];
 	}
 	array = temp;
     }
 
-    public void add (int s) {
+    public void add (Integer s) {
 	if (size == array.length) {
 	    resize();
 	}
@@ -41,7 +41,7 @@ public class MyHeap {
 	}
     }
 
-    public int peek() {
+    public Integer peek() {
 	if (size == 0) {
 	    throw new NoSuchElementException();
 	}
@@ -49,9 +49,9 @@ public class MyHeap {
     }
 
     private void pushUp() {
-	int x = array[size];
+	Integer x = array[size];
 	for (int i = size; i > 1; i =  i / 2){
-	    if (array[i] * constant >= array[i/2]) {
+	    if (array[i].compareTo(array[i/2]) * constant >= 0) {
 		    array[i] = array[i/2];
 		    array[i/2] = x;
 		}
@@ -61,23 +61,23 @@ public class MyHeap {
 	}
     }
 
-    public int remove() {
+    public Integer remove() {
 	if (size == 0) {
 	    throw new NoSuchElementException();
 	}
-	int temp = array[1];
+	Integer temp = array[1];
 	array[1] = array[size];
-	array[size] = 0;
+	array[size] = null;
 	size --;
 	pushDown();
 	return temp;
     }
     private void pushDown() {
 	for (int i = 1; i * 2 < size; i = i *2) {
-	    int val = array[i];
-	    if (array[i * 2] != 0 || array[i * 2 + 1] != 0) {
-		if (array[i * 2] * constant >= (array[i * 2 + 1])) {
-		    if (val * constant <= (array[i * 2])) {
+	    Integer val = array[i];
+	    if (array[i * 2] != null || array[i * 2 + 1] != null) {
+		if (array[i * 2].compareTo(array[i * 2 + 1]) * constant >= 0) {
+		    if (val.compareTo(array[i * 2]) * constant <= 0) {
 			array[i] = array[i * 2];
 			array[i * 2] = val;
 		    }
@@ -85,7 +85,7 @@ public class MyHeap {
 			break;
 		    }
 		}
-		else if (val * constant <= (array[i * 2 + 1])) {
+		else if (val.compareTo(array[i * 2 + 1]) * constant <= 0) {
 		    array[i] = array[i * 2 + 1];
 		    array[i * 2 + 1] = val;
 		}
@@ -94,7 +94,7 @@ public class MyHeap {
 		}
 	    }
 	    else {
-		if (array[i] * constant >= (array[i * 2])) {
+		if (array[i].compareTo(array[i * 2]) * constant >= 0) {
 			array[i] = array[i * 2];
 			array[i * 2 ] = val;
 		    }
