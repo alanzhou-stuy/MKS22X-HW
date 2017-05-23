@@ -14,12 +14,24 @@ public class Location implements Comparable<Location>{
 	aStar = aStar1;
     }
 
+    public Location getPrevious() {
+	return previous;
+    }
+    
+    public void setPrev(Location prev) {
+	previous = prev;
+    }
+
     public int getDistToStart() {
 	return distToStart;
     }
 
     public int getDistToGoal() {
 	return distToGoal;
+    }
+    
+    public static int getDistance(int row, int col, Location next){
+	return Math.abs(row - next.getRow()) + Math.abs(col - next.getCol());
     }
 
     public int getRow() {
@@ -35,27 +47,10 @@ public class Location implements Comparable<Location>{
     }
     
     public int compareTo(Location other) {
-	if (aStar) {
-	    if (distToStart + distToGoal == other.getDistToStart() + getDistToGoal()) {
-		return 0;
-	    }
-	    else if (distToStart + distToGoal > other.getDistToStart() + getDistToGoal()) {
-		return 1;
-	    }
-	    else  {
-		return -1;
-	    }
-	}
-	else {
-	    if (distToGoal == other.getDistToGoal()) {
-		return 0;
-	    }
-	    else if (distToGoal > other.getDistToGoal()) {
-		return 1;
-	    }
-	    else {
-		return -1;
-	    }
+	if(aStar){
+	    return (distToStart + distToGoal) - (other.distToStart + other.distToGoal);
+	} else {
+	    return (distToGoal) - (other.distToGoal);
 	}
     }
 }
