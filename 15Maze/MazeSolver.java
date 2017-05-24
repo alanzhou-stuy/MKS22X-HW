@@ -4,6 +4,7 @@ public class MazeSolver {
     private Maze board;
     private boolean animate;
     private Frontier f;
+    private int x1;
     
     public MazeSolver(String filename) {
 	this(filename,false);
@@ -20,6 +21,7 @@ public class MazeSolver {
     }
 
     public void solve(int x) {
+	x1 = x;
 	if(x == 0){
 	    f = new StackFrontier();
 	}
@@ -31,33 +33,45 @@ public class MazeSolver {
 	}
 	else if(x == 3){
 	    f = new FrontierPriorityQueue(true);
+	    board.getStart().setAStar(true);
+	    board.getEnd().setAStar(true);
 	}
 	f.add(board.getStart());
 	while(f.getSize() > 0) {
 	    Location current = f.next();
 	    board.set(current.getRow(),current.getCol(),'.');
 	    for (Location n: getValidNeighbors(current)) {
+		//System.out.println(n.getAStar());
+		//System.out.println(n.getDistToGoal() + n.getDistToStart());
 		if (isEnd(n)) {
 		    board.getEnd().setPrev(current);
 		    Location c = board.getEnd().getPrevious();
 		    while (c != null) {
-			c = c.getPrevious();
 			board.set(c.getRow(), c.getCol(), '@');
+			c = c.getPrevious();
+			if(animate){
+			    System.out.println(board.toString(30));
+			}
 		    }
 		    board.set(board.getStart().getRow(),board.getStart().getCol(),'S');
 		    board.set(board.getEnd().getRow(),board.getEnd().getCol(),'E');
-
+		    
 		    return;
 		}
 		else {
-		    f.add(n);
-		    board.set(n.getRow(),n.getCol(),'?');
+		    if(x == 3){
+			n.setAStar(true);
+		    }
+			f.add(n);
+			board.set(n.getRow(),n.getCol(),'?');
 		}
+		
+	    }
+	    if(animate){
+		System.out.println(board.toString(30));
 	    }
 	}
-	if (animate == true) {
-	    System.out.println(board.toString());
-	}
+	
     }
 
     private boolean isEnd(Location current) {
@@ -70,15 +84,20 @@ public class MazeSolver {
 	r = current.getRow();
 	c = current.getCol();
 
+	boolean b = true;
+	if (x1 == 2) {
+	    b = false;
+	}
+
 	Location[] x = {
-	    new Location(r - 1,c,current,Location.getDistance(r - 1,c,board.getStart()),Location.getDistance(r - 1,c,board.getEnd()),false),
-	    new Location(r + 1,c,current,Location.getDistance(r + 1,c,board.getStart()),Location.getDistance(r + 1,c,board.getEnd()),false),
-	    new Location(r,c - 1,current,Location.getDistance(r,c - 1,board.getStart()),Location.getDistance(r,c - 1,board.getEnd()),false),
-	    new Location(r,c + 1,current,Location.getDistance(r,c + 1,board.getStart()),Location.getDistance(r,c + 1,board.getEnd()),false)
+	    new Location(r - 1,c,current,Location.getDistance(r - 1,c,board.getStart()),Location.getDistance(r - 1,c,board.getEnd()),b),
+	    new Location(r + 1,c,current,Location.getDistance(r + 1,c,board.getStart()),Location.getDistance(r + 1,c,board.getEnd()),b),
+	    new Location(r,c - 1,current,Location.getDistance(r,c - 1,board.getStart()),Location.getDistance(r,c - 1,board.getEnd()),b),
+	    new Location(r,c + 1,current,Location.getDistance(r,c + 1,board.getStart()),Location.getDistance(r,c + 1,board.getEnd()),b)
 	};
 	
 	for (Location i : x) {
-	    if (board.inBounds(i) && board.isValid(i)) {
+	    if (board.get(i.getRow(),i.getCol()) == ' ' || board.get(i.getRow(),i.getCol()) == 'E') {
 		ans.add(i);
 	    }
 	}
@@ -90,8 +109,8 @@ public class MazeSolver {
     }
 
     public static void main(String[] args){	
-	MazeSolver m = new MazeSolver("data0.txt", true);
-	m.solve(0);
+	MazeSolver m = new MazeSolver("data1.txt", true);
+	m.solve(2);
 	System.out.println(m);	
     }
 }
