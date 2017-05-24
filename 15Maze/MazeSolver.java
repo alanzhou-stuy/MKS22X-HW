@@ -46,7 +46,9 @@ public class MazeSolver {
 		if (isEnd(n)) {
 		    board.getEnd().setPrev(current);
 		    Location c = board.getEnd().getPrevious();
+		    int x12 = 0;
 		    while (c != null) {
+			x12 ++;
 			board.set(c.getRow(), c.getCol(), '@');
 			c = c.getPrevious();
 			if(animate){
@@ -55,20 +57,20 @@ public class MazeSolver {
 		    }
 		    board.set(board.getStart().getRow(),board.getStart().getCol(),'S');
 		    board.set(board.getEnd().getRow(),board.getEnd().getCol(),'E');
-		    
+		    //System.out.println("number of steps: " + x12);
 		    return;
 		}
 		else {
 		    if(x == 3){
 			n.setAStar(true);
 		    }
-			f.add(n);
-			board.set(n.getRow(),n.getCol(),'?');
+		    f.add(n);
+		    board.set(n.getRow(),n.getCol(),'?');
 		}
 		
 	    }
 	    if(animate){
-		System.out.println(board.toString(30));
+		System.out.println(board.toString(15));
 	    }
 	}
 	
@@ -109,8 +111,8 @@ public class MazeSolver {
     }
 
     public static void main(String[] args){	
-	MazeSolver m = new MazeSolver("data1.txt", true);
-	m.solve(2);
+	MazeSolver m = new MazeSolver("data2.txt", true);
+	m.solve(3);
 	System.out.println(m);	
     }
 }

@@ -18,10 +18,6 @@ public class Maze{
   public Location getEnd(){
     return end;
   }
-
-    public boolean isValid(Location loc){
-	return maze[loc.getRow()][loc.getCol()] != '#';
-    }
     
   private static String go(int x,int y){
     return ("\033[" + x + ";" + y + "H");
@@ -152,11 +148,4 @@ public class Maze{
     return ans;
   }
 
-    public int getMaxRows() {
-	return maxRows;
-    }
-
-    public int getMaxCols() {
-	return maxRows;
-    }
 }
