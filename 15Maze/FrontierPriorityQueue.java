@@ -24,7 +24,7 @@ public class FrontierPriorityQueue implements Frontier{
 	} 
 	else {
 	    l.setAStar(false);
-	    heap.add(l);
+	    heap.add(l);	
 	}
     }
 

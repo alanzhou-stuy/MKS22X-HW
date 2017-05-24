@@ -14,7 +14,7 @@ public class MyHeap{
     }
 
     public MyHeap(boolean x) {
-	constant = -1;
+	constant = 1;
 	aStar = x;
 	array = new Location[100];
 	size = 0;
@@ -32,7 +32,7 @@ public class MyHeap{
 	if (size == array.length) {
 	    resize();
 	}
-	if (AStar) {
+	if (aStar) {
 	    s.setAStar(true);
 	    array[size + 1] = s;
 	    size ++;
@@ -60,23 +60,24 @@ public class MyHeap{
 
     private void pushUp() {
 	Location x = array[size];
+	x.setAStar(aStar);
 	for (int i = size; i > 1; i =  i / 2){
-		if (array[i].compareTo(array[i/2]) * constant < 0) {
-		    array[i] = array[i/2];
-		    array[i/2] = x;
+	    array[i].setAStar(aStar);
+	    if (array[i].compareTo(array[i/2]) * constant > 0) {
+		array[i] = array[i/2];
+		array[i/2] = x;
 		}
-		else {
-		    return;
-		} 
+	    else {
+		return;
+	    } 
 	}
     }
-
+    
     public Location next() {
 	if (size == 0) {
 	    throw new NoSuchElementException();
 	}
 	Location temp = array[1];
-
 	array[1] = array[size];
 	array[size] = null;
 	size --;
@@ -87,9 +88,11 @@ public class MyHeap{
     private void pushDown() {
 	for (int i = 1; i * 2 < size; i = i *2) {
 		Location val = array[i];
+		val.setAStar(aStar);
+		array[i].setAStar(aStar);
 		if (array[i * 2] != null || array[i * 2 + 1] != null) {
-		if (array[i * 2].compareTo(array[i * 2 + 1]) * constant >= 0) {
-		    if (val.compareTo(array[i * 2]) * constant <= 0) {
+		if (array[i * 2].compareTo(array[i * 2 + 1]) * constant > 0) {
+		    if (val.compareTo(array[i * 2]) * constant < 0) {
 			array[i] = array[i * 2];
 			array[i * 2] = val;
 		    }
@@ -97,7 +100,7 @@ public class MyHeap{
 			break;
 		    }
 		}
-		else if (val.compareTo(array[i * 2 + 1]) * constant <= 0) {
+		else if (val.compareTo(array[i * 2 + 1]) * constant < 0) {
 		    array[i] = array[i * 2 + 1];
 		    array[i * 2 + 1] = val;
 		}
@@ -106,7 +109,7 @@ public class MyHeap{
 		}
 	    }
 		else {
-		    if (array[i].compareTo(array[i * 2]) * constant >= 0) {
+		    if (array[i].compareTo(array[i * 2]) * constant > 0) {
 			array[i] = array[i * 2];
 			array[i * 2 ] = val;
 		    }
