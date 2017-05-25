@@ -33,8 +33,8 @@ public class MazeSolver {
 	}
 	else if(x == 3){
 	    f = new FrontierPriorityQueue(true);
-	    //board.getStart().setAStar(true);
-	    //xboard.getEnd().setAStar(true);
+	    board.getStart().setAStar(true);
+	    board.getEnd().setAStar(true);
 	}
 	f.add(board.getStart());
 	while(f.getSize() > 0) {
@@ -111,8 +111,8 @@ public class MazeSolver {
     }
 
     public static void main(String[] args){	
-	MazeSolver m = new MazeSolver("data0.txt", false);
-	m.solve(2);
+	MazeSolver m = new MazeSolver("data4.txt", false);
+	m.solve(3);
 	System.out.println(m);	
     }
 }

@@ -14,7 +14,8 @@ public class MyHeap{
     }
 
     public MyHeap(boolean x) {
-	constant = 1;
+	constant = -1;
+
 	aStar = x;
 	array = new Location[100];
 	size = 0;
@@ -36,6 +37,7 @@ public class MyHeap{
 	    s.setAStar(true);
 	    array[size + 1] = s;
 	    size ++;
+	    //System.out.println("add with aStar");
 	    if (size > 1)  {
 		pushUp();
 	    }
@@ -44,6 +46,7 @@ public class MyHeap{
 	    s.setAStar(false);
 	    array[size + 1] = s;
 	    size ++;
+	    //System.out.println("add without aStar1111");
 	    if (size > 1)  {
 		pushUp();
 	    }
@@ -60,10 +63,9 @@ public class MyHeap{
 
     private void pushUp() {
 	Location x = array[size];
-	x.setAStar(aStar);
 	for (int i = size; i > 1; i =  i / 2){
 	    array[i].setAStar(aStar);
-	    if (array[i].compareTo(array[i/2]) * constant > 0) {
+	    if ((array[i/2] != null) &(array[i].compareTo(array[i/2]) * constant > 0)) {
 		array[i] = array[i/2];
 		array[i/2] = x;
 		}
@@ -88,10 +90,8 @@ public class MyHeap{
     private void pushDown() {
 	for (int i = 1; i * 2 < size; i = i *2) {
 		Location val = array[i];
-		val.setAStar(aStar);
-		array[i].setAStar(aStar);
 		if (array[i * 2] != null || array[i * 2 + 1] != null) {
-		if (array[i * 2].compareTo(array[i * 2 + 1]) * constant > 0) {
+		if (array[i * 2].compareTo(array[i * 2 + 1]) * constant >= 0) {
 		    if (val.compareTo(array[i * 2]) * constant < 0) {
 			array[i] = array[i * 2];
 			array[i * 2] = val;

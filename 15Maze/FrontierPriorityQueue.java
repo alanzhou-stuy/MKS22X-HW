@@ -5,11 +5,11 @@ public class FrontierPriorityQueue implements Frontier{
     private boolean aStar;
 
     public FrontierPriorityQueue() {
-	heap = new MyHeap();
+	this(true);
     }
 
     public FrontierPriorityQueue(boolean aStar1) {
-	heap = new MyHeap(true);
+	heap = new MyHeap(aStar1);
 	aStar = aStar1;
     }
     
