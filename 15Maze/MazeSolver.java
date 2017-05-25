@@ -111,7 +111,7 @@ public class MazeSolver {
     }
 
     public static void main(String[] args){	
-	MazeSolver m = new MazeSolver("data4.txt", false);
+	MazeSolver m = new MazeSolver("data5.txt", false);
 	m.solve(3);
 	System.out.println(m);	
     }
