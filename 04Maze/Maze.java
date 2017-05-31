@@ -4,30 +4,46 @@ import java.io.*;
 public class Maze{
     private char[][]maze;
     private boolean animate;
-
-    /*Constructor loads a maze text file, and sets animate to false by default.
-      1. The file contains a rectangular ascii maze, made with the following 4 characters:
-      '#' - locations that cannot be moved onto
-      ' ' - locations that can be moved onto
-      'E' - the location of the goal (exactly 1 per file)
-
-      'S' - the location of the start(exactly 1 per file)
-
-      2. The maze has a border of '#' around the edges. So you don't have to check for out of bounds!
-      3. When the file is not found OR there is no E or S then: print an error and exit the program.
-
-    */
-
+    private int startingX,startingY,endingX,endingY;
+    
     public Maze(String filename){
-	File text = new File(filename); 
-        Scanner inf = new Scanner(text);
-        int lineNumber = 1;
-        while(inf.hasNextLine()){
-            String line = inf.nextLine();
-            System.out.println(line);
-        }	       
-	animate = false;
-	
+	//startingX = -1;
+	//startingY = -1;
+	try {
+	    File text = new File(filename); 
+	    Scanner inf = new Scanner(text);
+	    int x = 0;
+	    int y = 0;
+	    while (inf.hasNextLine()) {
+		    x++;
+		    y = inf.nextLine().length();
+	    }
+	    inf.close();
+	    maze = new char[x][y];
+	    inf = new Scanner(text);
+	    int counter = 0;
+	    while(inf.hasNext()){
+		String line = inf.nextLine();
+		for (int i = 0; i < line.length(); i ++ ) {
+		    maze[counter][i] = line.charAt(i);
+		    if (line.charAt(i) == 'S') {
+			startingX = counter;
+			    startingY = i;
+		    }
+		    if (line.charAt(i) == 'E')  {
+			endingX = counter;
+			endingY = i;		    
+		    }
+		}
+		    counter += 1;
+	    }
+	    animate = false;
+	    System.out.println(startingX + "," + startingY);
+	}
+	catch(FileNotFoundException j) {
+	    System.out.println("File not found."); 
+	    System.exit(0);
+	}	       	
     }
     
 
@@ -49,37 +65,47 @@ public class Maze{
     }
 
     public boolean solve(){
-            int startr=-1,startc=-1;
-            maze[startr][startc] = ' ';
-            return solve(startr,startc);
+	int startr = startingX;
+	int startc = startingY;
+	maze[startr][startc] = ' ';
+	return solve(startr,startc);
     }
 
-    /*
-      Recursive Solve function:
-
-      A solved maze has a path marked with '@' from S to E.
-
-      Returns true when the maze is solved,
-      Returns false when the maze has no solution.
-
-
-      Postcondition:
-
-        The S is replaced with '@' but the 'E' is not.
-
-        All visited spots that were not part of the solution are changed to '.'
-        All visited spots that are part of the solution are changed to '@'
-    */
     private boolean solve(int row, int col){
         if(animate){
             System.out.println("\033[2J\033[1;1H"+this);
             wait(20);
         }
-
-
-
-        return false; //so it compiles
+	if (maze[row][col] == 'E') {
+	    return true;
+	}
+	if (maze[row][col] == ' ') {
+	    maze[row][col] = '@';
+	    if (solve(row + 1,col)|| solve(row - 1,col) || solve(row, col + 1) || solve (row, col - 1)) {
+		return true;
+	    }
+	    else{
+		maze[row][col] = '.';
+	    }
+	}
+	
+	
+        return false;
     }
+
+    public String toString(){
+	String x = "";
+	for(int i = 0; i < maze.length;i++){
+	    for(int k = 0; k < maze[0].length;k++){
+		layout += maze[i][k];
+		if(k == maze[0].length - 1){
+		    layout += "\n";
+		}
+	    }
+	}
+	return x;
+    }
+
 
 
 }
