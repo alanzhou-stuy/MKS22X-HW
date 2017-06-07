@@ -110,9 +110,13 @@ public class MazeSolver {
 	return board.toString();
     }
 
+    public String toString(int c) {
+	return board.toString(c); 
+    }
+
     public static void main(String[] args){	
-	MazeSolver m = new MazeSolver("data5.txt", false);
+	MazeSolver m = new MazeSolver("data1.txt");
 	m.solve(3);
-	System.out.println(m);	
+	System.out.println();	
     }
 }
