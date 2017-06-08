@@ -106,11 +106,15 @@ public class MazeSolver {
 	return ans;
     }
  
-    public String toString() {
+     public String toString() {
 	return board.toString();
     }
 
-    
+    public String toString(int n) {
+	return board.toString(n);
+    }
+
+   
     public static void main(String[] args){	
 	MazeSolver m = new MazeSolver("data1.txt");
 	m.solve(3);
